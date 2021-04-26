@@ -1,4 +1,4 @@
-from math import fabs
+from math import fabs #funcao absoluta
 import random
 
 ##-------------------------------------------##
@@ -29,9 +29,10 @@ def clearGlobais():
     d = 0
 
 
-##--------------------------------------------------##
-##--Cria Vetor Down (Contém informaçõs das Strips)--##
-##--------------------------------------------------##
+##------------------------------------------------------------------------------##
+## makeDown(vet): recebe um vetor de números inteiros "vet" (permutacao) e devolve
+## o vetor "down", que contém informações das strips decrescentes.
+##-----------------------------------------------------------------##
 
 def makeDown(vet):
     global down
@@ -52,9 +53,10 @@ def makeDown(vet):
     return
 
 
-##--------------------------------------------------##
-##--Método que retorna a inversa de uma permutação--##
-##--------------------------------------------------##
+##-------------------------------------------------------------------##
+## inversa(vet): recebe um vetor de números inteiros "vet" e devolve
+## o vetor "vetI", que contém a inversa da permutação contida em vet
+##-------------------------------------------------------------------##
 
 def inversa(vet):
     global vetI
@@ -63,9 +65,10 @@ def inversa(vet):
         vetI[vet[i]] = i
 
 
-##--------------------------------------------------##
-##----------Método que conta Breakpoints------------##
-##--------------------------------------------------##
+##---------------------------------------------------------------------##
+## countBP(vet): recebe um vetor de números inteiros "vet" e devolve
+## a variavel "BP", que contém a quantidade de breakpoints da permutacao
+##---------------------------------------------------------------------##
 
 def countBP(vet):
     global BP
@@ -75,9 +78,11 @@ def countBP(vet):
             BP += 1
 
 
-##--------------------------------------------------##
-##----------Método que faz uma reversao-------------##
-##--------------------------------------------------##
+##---------------------------------------------------------------------##
+## reversao(i, j, vet): recebe um intervalo [i,j] endpoints e um vetor
+## de números inteiros "vet", e devolve o vetor prefix+vetRev+sufix, que
+##contém a nova permutação com o intervalo [i, j] revertido.
+##---------------------------------------------------------------------##
 
 def reversao(i, j, vet):
     prefix = vet[:i]
@@ -87,9 +92,12 @@ def reversao(i, j, vet):
     return prefix + vetRev + sufix
 
 
-##--------------------------------------------------##
-##-------Busca o candidato a melhor reversao--------##
-##--------------------------------------------------##
+##-------------------------------------------------------------------------##
+## searchCandidate(vet): recebe um vetor de números inteiros "vet" e devolve
+## a melhor reversao possível a ser feita, retornando o intervalo "candidate[i, j]"
+## seja ela uma 2-reversão, 1-reversão (com strip decrescente), 1-reversao ou
+## uma 0-reversao
+##-------------------------------------------------------------------------##
 
 def searchCandidate(vet):
     pivo = 0
@@ -196,6 +204,12 @@ def searchCandidate(vet):
     return candidate
 
 
+##----------------------------------------------------------------------------------------##
+## greedy(vet): recebe um vetor de números inteiros "vet", itera sobre a quantidade
+## de breakpoints, atualizando as variaveis globais a cada iteração, aplicando as reversoes
+## e devolvendo o vetor (permutação) "vet" ordenado.##
+##----------------------------------------------------------------------------------------##
+
 def greedy(vet):
     global BP
     global lista
@@ -215,9 +229,11 @@ def greedy(vet):
     print("Ordenado:", vet == sorted(vet))
 
 
-##--------------------------------------------------##
-##----------------------Main------------------------##
-##--------------------------------------------------##
+##-----------------------------------------------------------##
+## Main: cria o vetor "vet" (permutação) e executa
+## multiplos testes. Retorna a quantidade de passos necessária
+## para ordenar a permutação e as reversões feitas para isso.
+##-----------------------------------------------------------##
 
 if __name__ == '__main__':
     # teste com 10 permutaçoes randomicas de 10 elementos
