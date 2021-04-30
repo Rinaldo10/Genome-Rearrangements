@@ -1,44 +1,60 @@
 import networkx as nx
 import matplotlib.pyplot as plt
+from math import fabs  # funcao absoluta
+
+vetI = []  # Inversa
 
 
-def EM(G):
-    return
+def makeEdges(G, vet):
+    global vetI
+    for i in range(1, len(vet) - 1):
+        if fabs(vet[i] - vet[i - 1]) > 1:
+            print(vetI)
+            A = vetI[vet[i] + 1]
+            B = vetI[vet[i] - 1]
+
+            # verifica se remove o BP [i, i-1] com A
+            print(i)
+            if fabs(vet[i - 1] - vet[A - 1]) == 1 and fabs(vet[A] - vet[A - 1]) > 1 and A > i:
+                G.add_edge(i, A)
+
+            # verifica se remove o BP [i, i-1] com B
+            elif fabs(vet[i - 1] - vet[B - 1]) == 1 and fabs(vet[B] - vet[B - 1]) > 1 and B > i:
+                G.add_edge(i, B)
+
+            elif A < len(vet)-1 and fabs(vet[i - 1] - vet[A + 1]) == 1 and fabs(vet[A] - vet[A + 1]) > 1:
+                G.add_edge(i, A)
+
+            elif fabs(vet[i - 1] - vet[B + 1]) == 1 and fabs(vet[B] - vet[B + 1]) > 1 and B > i:
+                G.add_edge(i, B)
+
+    return G
 
 
-if __name__ == '__main__':
+def inversa(vet):
+    global vetI
+    vetI = [0] * len(vet)
+    for i in range(len(vet)):
+        vetI[vet[i]] = i
 
-    G = nx.Graph()
-    for i in range(1, 10):
-        G.add_node(i)
+    return vetI
 
-    G.add_edge(3, 4)
-    G.add_edge(1, 3)
-    G.add_edge(5, 6)
-    G.add_edge(5, 9)
-    G.add_edge(7, 8)
-    G.add_edge(1, 8)
-    G.add_edge(1, 4)
-    G.add_edge(8, 5)
-    G.add_edge(1, 2)
 
-    nx.draw(G, with_labels=True)
-    plt.show()
-
-    EM(G)
-
-'''def search_BP(vet):
+def makeNodes(vet):
     H = nx.MultiGraph()
-    for item in range(len(vet) - 1):
-        if fabs(vet[item + 1] - vet[item]) > 1:
-            H.add_node(vet[item + 1])
+    for i in range(1, len(vet)):
+        if fabs(vet[i] - vet[i - 1]) > 1:
+            H.add_node(i)
 
     return H
 
 
 if __name__ == '__main__':
     G = nx.MultiGraph()
-    vet = [1, 7, 5, 4, 2, 3, 8, 6]
-    G = search_BP(vet)
-    nx.draw(G)
-    plt.show()'''
+    vet = [0, 1, 7, 5, 4, 2, 3, 8, 6, 9]
+    inversa(vet)
+    G = makeNodes(vet)
+    G = makeEdges(G, vet)
+
+    nx.draw(G, with_labels=True)
+    plt.show()
