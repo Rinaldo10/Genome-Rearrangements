@@ -1,6 +1,7 @@
+from EM import extern
 from math import fabs, ceil
-from itertools import combinations
 import time
+from itertools import combinations
 
 d = 0
 r = []
@@ -38,6 +39,7 @@ def clearGlobais():
 
 def count_BP(vet):
     global BP
+    BP = 0
     for item in range(len(vet) - 1):
         if fabs(vet[item + 1] - vet[item]) > 1:
             BP = BP + 1
@@ -108,6 +110,11 @@ def LowerBound(vet):
     count_BP(vet)
     return ceil(BP / 2)
 
+def LowerBound2(vet):
+    M = extern(vet)
+    count_BP(vet)
+    lb = ceil((len(M)/2) + (2/3) * (BP - len(M)))
+    return lb
 
 def Bnb(vet):
     UpperBound(vet)
@@ -138,7 +145,7 @@ def search(vet, d2):
 if __name__ == "__main__":
 
     ### Teste Permutacoes de Gollan ###
-    for i in range(1, 5):
+    for i in range(1, 10):
         vet = []
         vet = gera_Gollan(i)
 
